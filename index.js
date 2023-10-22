@@ -27,6 +27,8 @@ async function run() {
 
         const productCollection = client.db('productDb').collection('product')
         const brandCollection = client.db('brandsDB').collection('brands')
+        const cartCollection = client.db('cartDB').collection('cart')
+        
 
         app.get('/brands', async(req,res) => {
             const cursor = brandCollection.find();
@@ -47,6 +49,13 @@ async function run() {
             res.send(result)
         })
 
+        app.post('/cart', async(req,res) =>{
+            const newCart = req.body;
+            console.log(newCart);
+            const result = await cartCollection.insertOne(newCart)
+            res.send(result)
+        })
+
 
 
         // Send a ping to confirm a successful connection
@@ -58,8 +67,6 @@ async function run() {
     }
 }
 run().catch(console.dir);
-
-
 
 
 
